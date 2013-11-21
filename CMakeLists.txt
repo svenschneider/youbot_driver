@@ -1,6 +1,19 @@
 PROJECT(youbot_driver)
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
 
+########### CATKIN SPECIFIC ######## 
+find_package(catkin REQUIRED COMPONENTS roscpp)
+
+catkin_package(
+  INCLUDE_DIRS 
+    include/
+    include/soem
+  LIBRARIES
+    soem
+    YouBotDriver
+)
+
+
 OPTION(USE_ROS "Enable ROS as compile tool" OFF)
 
 ########### ROS ###########
@@ -18,9 +31,9 @@ SET(CMAKE_CXX_FLAGS_DEBUG "-fPIC -Wall -g")
 SET(CMAKE_C_FLAGS_RELEASE "-fPIC -Wall")
 SET(CMAKE_CXX_FLAGS_RELEASE "-fPIC -Wall")
 SET(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
-SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib) #static libraries
-SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin) #executables
-SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib) #dynamic libraries (plugins)
+#SET(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib) #static libraries
+#SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin) #executables
+#SET(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/lib) #dynamic libraries (plugins)
 
 # find required and optional dependencies
 
@@ -34,11 +47,6 @@ IF (Boost_FOUND)
 ELSE (Boost_FOUND)
   MESSAGE(STATUS "ERROR: Boost not found")
 ENDIF (Boost_FOUND)
-
-########### Doxygen ###########
-SET(DOXYFILE_LATEX "NO")
-SET(DOXYFILE_OUTPUT_DIR ${PROJECT_SOURCE_DIR}/doc)
-include(UseDoxygen)
 
 ########### Simple Open EtherCAT Master Library ###########
 add_subdirectory(src/soem)
